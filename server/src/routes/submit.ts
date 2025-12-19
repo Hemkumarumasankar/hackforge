@@ -166,7 +166,7 @@ router.post('/upload', upload.single('file'), async (req: Request, res: Response
             console.error(`❌ Upload failed: ${result.message}`);
             res.status(500).json({
                 success: false,
-                message: 'Failed to upload project. Please try again.'
+                message: `Upload failed: ${result.message}`
             });
         }
 
