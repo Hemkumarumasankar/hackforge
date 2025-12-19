@@ -83,7 +83,13 @@ function App() {
               reject(new Error('Invalid server response'));
             }
           } else {
-            reject(new Error(`Server Error: ${xhr.statusText}`));
+            // Try to parse error message from response body
+            try {
+              const errorResult = JSON.parse(xhr.responseText);
+              reject(new Error(errorResult.message || `Server Error (${xhr.status})`));
+            } catch {
+              reject(new Error(`Server Error: ${xhr.status} ${xhr.statusText}`));
+            }
           }
         });
 
