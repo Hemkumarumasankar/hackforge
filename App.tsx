@@ -50,7 +50,10 @@ function App() {
       setUploadProgress('Uploading to secure storage...');
 
       // API URL - uses env variable in production, localhost in development
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      if (!API_URL.startsWith('http')) {
+        API_URL = `https://${API_URL}`;
+      }
 
       // Use XMLHttpRequest for upload progress tracking
       await new Promise((resolve, reject) => {
