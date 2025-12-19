@@ -1,3 +1,4 @@
+console.log('Starting server initialization...');
 import dotenv from 'dotenv';
 // Load environment variables FIRST, before other imports
 dotenv.config();

@@ -13,8 +13,13 @@ const getMockMode = () => process.env.MOCK_MODE === 'true';
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
+try {
+    if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+        console.log(`Created uploads directory at: ${uploadsDir}`);
+    }
+} catch (err: any) {
+    console.warn(`Failed to create uploads directory: ${err.message}. Uploads might fail.`);
 }
 
 // Configure multer for disk storage (handles large files 1-2 GB efficiently)
