@@ -171,10 +171,10 @@ router.post('/upload', upload.single('file'), async (req: Request, res: Response
         }
 
     } catch (error: any) {
-        console.error('[ROUTE ERROR]', error.message);
+        console.error('[ROUTE ERROR]', error.message, error.stack);
         res.status(500).json({
             success: false,
-            message: 'Server error occurred'
+            message: `Server error: ${error.message}`
         });
     } finally {
         // Clean up: Delete the temporary file after upload
