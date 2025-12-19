@@ -59,6 +59,14 @@ const server = app.listen(Number(PORT), '0.0.0.0', () => {
 });
 
 // Set timeout to 30 minutes (1.8 million milliseconds) to handle 2GB uploads
-server.timeout = 30 * 60 * 1000;
-server.keepAliveTimeout = 30 * 60 * 1000;
-server.headersTimeout = 30 * 60 * 1000 + 1000;
+// server.timeout = 30 * 60 * 1000;
+// server.keepAliveTimeout = 30 * 60 * 1000;
+// server.headersTimeout = 30 * 60 * 1000 + 1000;
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received. Shutting down gracefully...');
+    server.close(() => {
+        console.log('Process terminated');
+    });
+});
