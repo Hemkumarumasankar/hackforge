@@ -33,6 +33,3 @@ server/.env.*
 server/dist
 server/uploads
 
-# Build artifacts
-*.zip
-
