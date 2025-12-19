@@ -14,7 +14,8 @@ const PORT = process.env.PORT || 3001;
 const allowedOrigins = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    process.env.hackforgesubmissionportal - six.vercel.app
+    process.env.FRONTEND_URL,
+    'https://hackforgesubmissionportal-six.vercel.app'
 ].filter(Boolean) as string[];
 
 app.use(cors({
