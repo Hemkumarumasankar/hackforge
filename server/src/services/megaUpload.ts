@@ -1,3 +1,9 @@
+// Polyfill crypto for megajs in Node.js environments
+import crypto from 'crypto';
+if (!globalThis.crypto) {
+    (globalThis as any).crypto = crypto.webcrypto;
+}
+
 import { Storage } from 'megajs';
 import fs from 'fs';
 import { MegaCredentials } from '../config.js';
