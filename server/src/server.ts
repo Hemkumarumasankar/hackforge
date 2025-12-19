@@ -10,20 +10,33 @@ import submitRouter from './routes/submit.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
-// Middleware
-const allowedOrigins = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    process.env.FRONTEND_URL,
-    'https://hackforgesubmissionportal-six.vercel.app',
-    'https://hackforgesubmissionportal.vercel.app'
-].filter(Boolean) as string[];
-
+// Middleware - Dynamic CORS for all Vercel deployments
 app.use(cors({
-    origin: allowedOrigins,
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type']
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+
+        // Allow all vercel.app subdomains
+        if (origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        }
+
+        // Allow localhost for development
+        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+            return callback(null, true);
+        }
+
+        // Allow if matches FRONTEND_URL env var
+        if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+            return callback(null, true);
+        }
+
+        console.log(`CORS blocked origin: ${origin}`);
+        callback(new Error('Not allowed by CORS'));
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+    credentials: true
 }));
 
 app.use(express.json());
