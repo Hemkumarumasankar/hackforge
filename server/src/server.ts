@@ -39,13 +39,13 @@ app.get('/', (_req, res) => {
 });
 
 // Start server
-const server = app.listen(PORT, () => {
+const server = app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║                                                            ║
 ║   🚀 NEXUS SUBMISSION BACKEND                              ║
 ║   ─────────────────────────────────────────────────────    ║
-║   Server running on http://localhost:${PORT}                 ║
+║   Server running on http://0.0.0.0:${PORT}                   ║
 ║   API Endpoint: http://localhost:${PORT}/api/upload          ║
 ║   ⏱️  Timeout set to 30 minutes for large uploads           ║
 ║                                                            ║
